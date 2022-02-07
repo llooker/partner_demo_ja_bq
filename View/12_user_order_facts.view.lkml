@@ -4,10 +4,11 @@ view: user_order_facts {
         user_id
         , COUNT(DISTINCT order_id) AS lifetime_orders
         , SUM(sale_price) AS lifetime_revenue
-        , MIN(created_at) AS first_order
-        , MAX(created_at) AS latest_order
-        , COUNT(DISTINCT DATE_TRUNC('month', created_at)) AS number_of_distinct_months_with_orders
-      FROM order_items
+        , CAST(MIN(created_at)  AS TIMESTAMP) AS first_order
+        , CAST(MAX(created_at)  AS TIMESTAMP)  AS latest_order
+        , COUNT(DISTINCT FORMAT_TIMESTAMP('%Y%m', created_at))  AS number_of_distinct_months_with_orders
+        --, FIRST_VALUE(CONCAT(uniform(2, 9, random(1)),uniform(0, 9, random(2)),uniform(0, 9, random(3)),'-',uniform(0, 9, random(4)),uniform(0, 9, random(5)),uniform(0, 9, random(6)),'-',uniform(0, 9, random(7)),uniform(0, 9, random(8)),uniform(0, 9, random(9)),uniform(0, 9, random(10)))) OVER (PARTITION BY user_id ORDER BY user_id) AS phone_number
+      FROM looker-private-demo.ecomm.order_items
       GROUP BY user_id
        ;;
 #     indexes: ["user_id"]
@@ -41,7 +42,7 @@ view: user_order_facts {
     label: "顧客期間（日）"
     description: "初購入日から最終購入日までの日数。"
     type: number
-    sql: DATEDIFF('day', ${TABLE}.first_order, ${TABLE}.latest_order)+1 ;;
+    sql: TIMESTAMP_DIFF(${TABLE}.latest_order, ${TABLE}.first_order, DAY)+1 ;;
   }
 
   dimension: days_as_customer_tiered {

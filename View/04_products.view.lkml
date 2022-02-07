@@ -1,5 +1,5 @@
 view: products {
-  sql_table_name: products ;;
+  sql_table_name: looker-private-demo.ecomm.products ;;
 
   dimension: id {
     primary_key: yes
@@ -46,7 +46,7 @@ view: products {
     link: {
       label: "Facebook"
       url: "http://www.google.com/search?q=site:facebook.com+{{ value | encode_uri }}+clothes&btnI"
-      icon_url: "https://static.xx.fbcdn.net/rsrc.php/yl/r/H3nktOa7ZMg.ico"
+      icon_url: "https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg"
     }
 
     link: {
@@ -77,7 +77,7 @@ view: products {
   dimension: distribution_center_id {
     label: "物流センターID"
     type: number
-    sql: ${TABLE}.distribution_center_id ;;
+    sql: CAST(${TABLE}.distribution_center_id AS INT64) ;;
   }
 
   ## MEASURES ##

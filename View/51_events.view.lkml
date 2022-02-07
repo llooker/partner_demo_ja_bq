@@ -1,5 +1,5 @@
 view: events {
-  sql_table_name: events ;;
+  sql_table_name: looker-private-demo.ecomm.events ;;
 
   dimension: event_id {
     label: "イベントID"
@@ -81,8 +81,8 @@ view: events {
   dimension: viewed_product_id {
     label: "閲覧プロダクトID"
     type: number
-    sql: CASE
-        WHEN ${event_type} = 'Product' THEN right(${full_page_url},length(${full_page_url})-9)
+    sql: CASE WHEN ${event_type} = 'Product' THEN
+    CAST(SPLIT(${full_page_url}, '/')[OFFSET(ARRAY_LENGTH(SPLIT(${full_page_url}, '/'))-1)] AS INT64)
       END
        ;;
   }
@@ -192,10 +192,7 @@ view: events {
   }
 
   set: simple_page_info {
-    fields: [event_id, event_time, event_type,
-      #       - os
-      #       - browser
-      full_page_url, user_id, funnel_step]
+    fields: [event_id, event_time, event_type, full_page_url, user_id, funnel_step]
   }
 
   set: visitors {

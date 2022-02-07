@@ -4,9 +4,9 @@ view: brand_rankings {
         TRIM(products.brand)  AS brand,
         COUNT(DISTINCT order_items.id ) AS item_count,
         RANK() OVER(ORDER BY COUNT(*) DESC) as rank
-      FROM order_items  AS order_items
-      FULL OUTER JOIN inventory_items  AS inventory_items ON inventory_items.id = order_items.inventory_item_id
-      LEFT JOIN products  AS products ON products.id = inventory_items.product_id
+      FROM looker-private-demo.ecomm.order_items  AS order_items
+      FULL OUTER JOIN looker-private-demo.ecomm.inventory_items  AS inventory_items ON inventory_items.id = order_items.inventory_item_id
+      LEFT JOIN looker-private-demo.ecomm.products  AS products ON products.id = inventory_items.product_id
       GROUP BY 1
        ;;
   }

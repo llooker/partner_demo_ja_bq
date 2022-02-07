@@ -46,31 +46,31 @@ view: cohort_size {
   view_label: "Cohort"
   derived_table: {
     sql: SELECT
-      CASE
-        WHEN {% parameter cohort_filter %} = 'User Signup Month'
-          THEN TO_CHAR(DATE_TRUNC('month', CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', users.created_at )), 'YYYY-MM')
-        WHEN {% parameter cohort_filter %} = 'Gender'
-          THEN users.gender
-        WHEN {% parameter cohort_filter %} = 'Traffic Source'
-          THEN users.traffic_source
-        WHEN {% parameter cohort_filter %} = 'Age Group'
-          THEN
-            (CASE
-              WHEN users.age  < 0 THEN 'Below 0'
-              WHEN users.age  >= 0 AND users.age  < 10 THEN '0 to 9'
-              WHEN users.age  >= 10 AND users.age  < 20 THEN '10 to 19'
-              WHEN users.age  >= 20 AND users.age  < 30 THEN '20 to 29'
-              WHEN users.age  >= 30 AND users.age  < 40 THEN '30 to 39'
-              WHEN users.age  >= 40 AND users.age  < 50 THEN '40 to 49'
-              WHEN users.age  >= 50 AND users.age  < 60 THEN '50 to 59'
-              WHEN users.age  >= 60 AND users.age  < 70 THEN '60 to 69'
-              WHEN users.age  >= 70 THEN '70 or Above'
-              ELSE 'Undefined'
-            END)
-      ELSE TO_CHAR(DATE_TRUNC('month', CONVERT_TIMEZONE('UTC', 'America/Los_Angeles', users.created_at )), 'YYYY-MM')
-      END AS cohort,
-      COUNT(DISTINCT users.id ) AS cohort_size
-      FROM users AS users
+    CASE
+    WHEN {% parameter cohort_filter %} = 'User Signup Month'
+    THEN cast(DATE_TRUNC(date(users.created_at), MONTH) as string)
+    WHEN {% parameter cohort_filter %} = 'Gender'
+    THEN users.gender
+    WHEN {% parameter cohort_filter %} = 'Traffic Source'
+    THEN users.traffic_source
+    WHEN {% parameter cohort_filter %} = 'Age Group'
+    THEN
+    (CASE
+    WHEN users.age  < 0 THEN 'Below 0'
+    WHEN users.age  >= 0 AND users.age  < 10 THEN '0 to 9'
+    WHEN users.age  >= 10 AND users.age  < 20 THEN '10 to 19'
+    WHEN users.age  >= 20 AND users.age  < 30 THEN '20 to 29'
+    WHEN users.age  >= 30 AND users.age  < 40 THEN '30 to 39'
+    WHEN users.age  >= 40 AND users.age  < 50 THEN '40 to 49'
+    WHEN users.age  >= 50 AND users.age  < 60 THEN '50 to 59'
+    WHEN users.age  >= 60 AND users.age  < 70 THEN '60 to 69'
+    WHEN users.age  >= 70 THEN '70 or Above'
+    ELSE 'Undefined'
+    END)
+    ELSE cast(DATE_TRUNC(date(users.created_at), MONTH) as string)
+    END AS cohort,
+    COUNT(DISTINCT users.id ) AS cohort_size
+      FROM looker-private-demo.ecomm.users AS users
       GROUP BY 1
        ;;
   }
@@ -237,6 +237,6 @@ view: order_items_cohorts {
     view_label: "Order Items"
     description: "Months an order occurred since the user first signed up"
     type: number
-    sql: DATEDIFF('month',${users.created_raw},${created_raw}) ;;
+    sql: DATE_DIFF(date(${users.created_raw}), date(${created_raw}), MONTH) ;;
   }
 }

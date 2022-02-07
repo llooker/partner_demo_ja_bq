@@ -1,5 +1,5 @@
 view: inventory_items {
-  sql_table_name: inventory_items ;;
+  sql_table_name: looker-private-demo.ecomm.inventory_items ;;
   ## DIMENSIONS ##
 
   dimension: id {
@@ -45,7 +45,7 @@ view: inventory_items {
     label: "発注リード"
     description: "days between created and sold date"
     type: number
-    sql: DATEDIFF('day', ${created_raw}, coalesce(${sold_raw},CURRENT_DATE)) ;;
+    sql: TIMESTAMP_DIFF(coalesce(${sold_raw}, CURRENT_TIMESTAMP()), ${created_raw}, DAY) ;;
   }
 
   dimension: days_in_inventory_tier {
@@ -60,7 +60,7 @@ view: inventory_items {
     label: "在庫期間"
     description: "days since created - useful when filtering on sold yesno for items still in inventory"
     type: number
-    sql: DATEDIFF('day', ${created_date}, GETDATE()) ;;
+    sql: TIMESTAMP_DIFF(CURRENT_TIMESTAMP(), ${created_raw}, DAY) ;;
   }
 
   dimension: days_since_arrival_tier {

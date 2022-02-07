@@ -1,4 +1,5 @@
 view: distribution_centers {
+  sql_table_name: looker-private-demo.ecomm.distribution_centers ;;
   dimension: location {
     label: "ロケーション"
     type: location

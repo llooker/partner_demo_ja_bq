@@ -1,5 +1,5 @@
 view: users {
-  sql_table_name: users ;;
+  sql_table_name: looker-private-demo.ecomm.users ;;
   ## Demographics ##
 
   dimension: id {
@@ -95,7 +95,7 @@ view: users {
 
   dimension: image_file {
     hidden: yes
-    sql: ('https://docs.looker.com/assets/images/'||${gender_short}||'.jpg') ;;
+    sql: concat('https://docs.looker.com/assets/images/',${gender_short},'.jpg') ;;
   }
 
   ## Demographics ##

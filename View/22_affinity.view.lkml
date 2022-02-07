@@ -145,10 +145,10 @@ view: user_order_product {
         oi.user_id AS user_id
         , p.id AS prod_id
         , oi.order_id AS order_id
-      FROM order_items oi
-      LEFT JOIN inventory_items ii
+      FROM looker-private-demo.ecomm.order_items oi
+      LEFT JOIN looker-private-demo.ecomm.inventory_items ii
         ON oi.inventory_item_id = ii.id
-      LEFT JOIN products p
+      LEFT JOIN looker-private-demo.ecomm.products p
         ON ii.product_id = p.id
       GROUP BY 1,2,3
        ;;
@@ -188,10 +188,10 @@ view: total_order_product {
     sql: SELECT
         p.id AS prod_id
         , COUNT(*) AS prod_freq
-      FROM order_items oi
-      LEFT JOIN inventory_items
+      FROM looker-private-demo.ecomm.order_items oi
+      LEFT JOIN looker-private-demo.ecomm.inventory_items
         ON oi.inventory_item_id = inventory_items.id
-      LEFT JOIN products p
+      LEFT JOIN looker-private-demo.ecomm.products p
         ON inventory_items.product_id = p.id
       GROUP BY p.id
        ;;

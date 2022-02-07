@@ -1,5 +1,5 @@
 view: order_items {
-  sql_table_name: order_items ;;
+  sql_table_name: looker-private-demo.ecomm.order_items ;;
   ########## IDs, Foreign Keys, Counts ###########
 
   dimension: id {
@@ -142,12 +142,12 @@ view: order_items {
     group_label: "Order Date"
     label: "レポート期間"
     sql: CASE
-        WHEN date_part('year',${created_raw}) = date_part('year',current_date)
-        AND ${created_raw} < CURRENT_DATE
+        WHEN EXTRACT(YEAR from ${created_raw}) = EXTRACT(YEAR from CURRENT_TIMESTAMP())
+        AND ${created_raw} < CURRENT_TIMESTAMP()
         THEN 'This Year to Date'
 
-        WHEN date_part('year',${created_raw}) + 1 = date_part('year',current_date)
-        AND date_part('dayofyear',${created_raw}) <= date_part('dayofyear',current_date)
+        WHEN EXTRACT(YEAR from ${created_raw}) + 1 = EXTRACT(YEAR from CURRENT_TIMESTAMP())
+        AND CAST(FORMAT_TIMESTAMP('%j', ${created_raw}) AS INT64) <= CAST(FORMAT_TIMESTAMP('%j', CURRENT_TIMESTAMP()) AS INT64)
         THEN 'Last Year to Date'
 
       END
@@ -156,14 +156,14 @@ view: order_items {
 
   dimension: days_since_sold {
     hidden: yes
-    sql: datediff('day',${created_raw},CURRENT_DATE) ;;
+    sql: TIMESTAMP_DIFF(${created_raw},CURRENT_TIMESTAMP(), DAY) ;;
   }
 
   dimension: months_since_signup {
     view_label: "オーダー"
     label: "登録から注文までの月数"
     type: number
-    sql: DATEDIFF('month',${users.created_raw},${created_raw}) ;;
+    sql: CAST(FLOOR(TIMESTAMP_DIFF(${created_raw}, ${users.created_raw}, DAY)/30) AS INT64) ;;
   }
 
 ########## Logistics ##########
@@ -192,8 +192,8 @@ view: order_items {
     label: "プロセス期間（日）"
     type: number
     sql: CASE
-        WHEN ${status} = 'プロセス中' THEN DATEDIFF('day',${created_raw},CURRENT_DATE())*1.0
-        WHEN ${status} IN ('出荷', '完了', '返品') THEN DATEDIFF('day',${created_raw},${shipped_raw})*1.0
+        WHEN ${status} = 'プロセス中' THEN TIMESTAMP_DIFF(CURRENT_TIMESTAMP(), ${created_raw}, DAY)*1.0
+        WHEN ${status} IN ('出荷', '完了', '返品') THEN TIMESTAMP_DIFF(${shipped_raw}, ${created_raw}, DAY)*1.0
         WHEN ${status} = 'キャンセル' THEN NULL
       END
        ;;
@@ -202,7 +202,7 @@ view: order_items {
   dimension: shipping_time {
     label: "発送期間（日）"
     type: number
-    sql: datediff('day',${shipped_raw},${delivered_raw})*1.0 ;;
+    sql: TIMESTAMP_DIFF(${delivered_raw}, ${shipped_raw}, DAY)*1.0 ;;
   }
 
   measure: average_days_to_process {
@@ -356,7 +356,7 @@ view: order_items {
     label: "発注間日数"
     type: number
     view_label: "リピーター"
-    sql: DATEDIFF('day',${created_raw},${repeat_purchase_facts.next_order_raw}) ;;
+    sql: TIMESTAMP_DIFF(${created_raw},${repeat_purchase_facts.next_order_raw}, DAY) ;;
   }
 
   dimension: repeat_orders_within_30d {
@@ -538,8 +538,7 @@ dimension: cohort_time_period {
   dimension: periods_as_customer {
     type: number
     hidden: yes
-    sql: DATEDIFF({% parameter cohort_by %}, ${user_order_facts.first_order_date}, ${user_order_facts.latest_order_date})
-      ;;
+    sql: TIMESTAMP_DIFF(${user_order_facts.first_order_date}, ${user_order_facts.latest_order_date}, {% parameter cohort_by %})      ;;
   }
 
   measure: cohort_values_0 {

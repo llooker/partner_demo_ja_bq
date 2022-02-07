@@ -6,10 +6,10 @@ view: customer_fact {
           products.brand AS brand,
           COALESCE(SUM(order_items.sale_price ), 0) AS lifetime_spent,
           COUNT(DISTINCT order_items.id ) AS lifetime_purchase,
-        FROM order_items  AS order_items
-        FULL OUTER JOIN inventory_items  AS inventory_items ON inventory_items.id = order_items.inventory_item_id
-        LEFT JOIN users  AS users ON order_items.user_id = users.id
-        LEFT JOIN products  AS products ON products.id = inventory_items.product_id
+        FROM looker-private-demo.ecomm.order_items  AS order_items
+        FULL OUTER JOIN looker-private-demo.ecomm.inventory_items  AS inventory_items ON inventory_items.id = order_items.inventory_item_id
+        LEFT JOIN looker-private-demo.ecomm.users  AS users ON order_items.user_id = users.id
+        LEFT JOIN looker-private-demo.ecomm.products  AS products ON products.id = inventory_items.product_id
         WHERE {% condition brand_selector %} products.brand {% endcondition %}
         GROUP BY 1,2 ;;
   }
