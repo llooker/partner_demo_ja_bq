@@ -1,4 +1,4 @@
-include: "/**/thelook_japanese.model.lkml"
+include: "/model/thelook_japanese_bq.model.lkml"
 view: order_facts {
   derived_table: {
     explore_source: order_items {
