@@ -12,7 +12,7 @@
   elements:
   - title: オーダー数
     name: オーダー数
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -35,7 +35,7 @@
     height: 3
   - title: 購入者数
     name: 購入者数
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -61,7 +61,7 @@
     height: 3
   - title: 平均オーダー額
     name: 平均オーダー額
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -85,7 +85,7 @@
     height: 3
   - title: トラフィックソース・OS別ブランド訪問
     name: トラフィックソース・OS別ブランド訪問
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: events
     type: looker_donut_multiples
     fields:
@@ -145,7 +145,7 @@
     height: 8
   - title: トッププロダクトカテゴリ - カート vs コンバージョン
     name: トッププロダクトカテゴリ - カート vs コンバージョン
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: events
     type: looker_column
     fields:
@@ -248,7 +248,7 @@
     height: 8
   - title: トップ訪問者・購入歴
     name: トップ訪問者・購入歴
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: events
     type: table
     fields:
@@ -286,7 +286,7 @@
     height: 10
   - title: 売上・価格トレンド
     name: 売上・価格トレンド
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_line
     fields:
@@ -375,7 +375,7 @@
     height: 10
   - title: 部門・カテゴリ別売上
     name: 部門・カテゴリ別売上
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: table
     fields:
@@ -414,7 +414,7 @@
     height: 10
   - title: トップブランド購入ユーザー
     name: トップブランド購入ユーザー
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: table
     fields:
@@ -451,7 +451,7 @@
     height: 8
   - title: "[ライフタイムオーダー数ピボット] 時間別セッション数"
     name: "[ライフタイムオーダー数ピボット] 時間別セッション数"
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: events
     type: looker_column
     fields:
@@ -526,7 +526,7 @@
     height: 8
   - title: ライフタイムブランド顧客内シェア
     name: ライフタイムブランド顧客内シェア
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: orders_with_share_of_wallet_application
     type: looker_line
     fields:
@@ -632,7 +632,7 @@
     height: 8
   - title: 相関ブランド分析
     name: 相関ブランド分析
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: affinity
     type: looker_line
     fields:
@@ -694,7 +694,7 @@
     height: 10
   - title: ブランド相関レポート
     name: ブランド相関レポート
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: affinity
     type: table
     fields:
@@ -759,7 +759,7 @@
     default_value: Calvin Klein
     allow_multiple_values: true
     required: false
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     listens_to_filters: []
     field: products.brand

@@ -12,7 +12,7 @@
   elements:
   - title: ユーザー情報
     name: ユーザー情報
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_single_record
     fields:
@@ -47,7 +47,7 @@
     height: 6
   - title: ライフタイムオーダー数
     name: ライフタイムオーダー数
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -69,7 +69,7 @@
     height: 4
   - title: 返品数
     name: 返品数
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -92,7 +92,7 @@
     height: 4
   - title: ライフタイムレベニュー
     name: ライフタイムレベニュー
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -134,7 +134,7 @@
     height: 4
   - title: オーダー歴
     name: オーダー歴
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: table
     fields:
@@ -163,7 +163,7 @@
     height: 6
   - title: トップカテゴリ
     name: トップカテゴリ
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_pie
     fields:
@@ -198,7 +198,7 @@
     height: 10
   - title: ユーザーイメージ
     name: ユーザーイメージ
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -222,7 +222,7 @@
     height: 6
   - title: ユーザー所在地
     name: ユーザー所在地
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_geo_coordinates
     fields:
@@ -275,7 +275,7 @@
     default_value: jgraham@gmail.com
     allow_multiple_values: true
     required: false
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     listens_to_filters: []
     field: users.email

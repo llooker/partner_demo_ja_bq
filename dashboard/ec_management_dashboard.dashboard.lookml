@@ -13,7 +13,7 @@
   elements:
   - title: 初回購入ユーザー数
     name: 初回購入ユーザー数
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -69,7 +69,7 @@
     height: 4
   - title: 平均オーダー売上
     name: 平均オーダー売上
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -127,7 +127,7 @@
     height: 4
   - title: カテゴリ別オーダー数
     name: カテゴリ別オーダー数
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_area
     fields:
@@ -201,7 +201,7 @@
     height: 9
   - title: サイト訪問vsコンバージョン率
     name: サイト訪問vsコンバージョン率
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: events
     type: looker_column
     fields:
@@ -303,7 +303,7 @@
     height: 8
   - title: トラフィックソース別アクティブコホート構成率
     name: トラフィックソース別アクティブコホート構成率
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_line
     fields:
@@ -383,7 +383,7 @@
     height: 7
   - title: コホート別消費額
     name: コホート別消費額
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_line
     fields:
@@ -459,7 +459,7 @@
     height: 8
   - title: 月別売上
     name: 月別売上
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_line
     fields:
@@ -522,7 +522,7 @@
     height: 9
   - title: トップ購入ユーザー
     name: トップ購入ユーザー
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_map
     fields:
@@ -627,7 +627,7 @@
     height: 9
   - title: トラフィックソース別ユーザー行動
     name: トラフィックソース別ユーザー行動
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_column
     fields:
@@ -700,7 +700,7 @@
     height: 7
   - title: ユーザー特質プロフィール
     name: ユーザー特質プロフィール
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: looker_donut_multiples
     fields:
@@ -766,7 +766,7 @@
     height: 8
   - title: トップブランド
     name: トップブランド
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: sessions
     type: table
     fields:
@@ -835,7 +835,7 @@
     height: 8
   - title: 30日内リピート購入率
     name: 30日内リピート購入率
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -883,7 +883,7 @@
     height: 4
   - title: オーダー数
     name: オーダー数
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     type: single_value
     fields:
@@ -969,7 +969,7 @@
     default_value: ''
     allow_multiple_values: true
     required: false
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     listens_to_filters:
     - Country
@@ -980,7 +980,7 @@
     default_value: ''
     allow_multiple_values: false
     required: false
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: order_items
     listens_to_filters:
     - Country

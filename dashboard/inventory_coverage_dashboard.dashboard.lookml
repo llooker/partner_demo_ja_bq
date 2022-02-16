@@ -5,7 +5,7 @@
   elements:
   - title: 出荷地別在庫カバレッジ比率
     name: 出荷地別在庫カバレッジ比率
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: inventory_items
     type: looker_map
     fields:
@@ -80,7 +80,7 @@
     height: 8
   - title: 在庫カバレッジ比率
     name: 在庫カバレッジ比率
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: inventory_items
     type: table
     fields:
@@ -134,7 +134,7 @@
     height: 8
   - title: 在庫カバレッジ分布
     name: 在庫カバレッジ分布
-    model: thelook_japanese
+    model: thelook_japanese_bq
     explore: inventory_items
     type: looker_area
     fields:
