@@ -58,7 +58,7 @@ view: order_items {
 
       param: {
         name: "user_dash_link"
-        value: "/dashboards/thelook_japanese::user_lookup_dashboard?Email={{ users.email._value}}"
+        value: "/dashboards/thelook_japanese_bq::user_lookup_dashboard?Email={{ users.email._value}}"
       }
 
       form_param: {

@@ -51,7 +51,7 @@ view: products {
 
     link: {
       label: "{{value}} Analytics Dashboard"
-      url: "/dashboards/thelook_japanese::brand_analytics_dashboard?ブランド={{ value | encode_uri }}"
+      url: "/dashboards/thelook_japanese_bq::brand_analytics_dashboard?ブランド={{ value | encode_uri }}"
       icon_url: "http://www.looker.com/favicon.ico"
     }
 

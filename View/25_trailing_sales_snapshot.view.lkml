@@ -1,30 +1,25 @@
 view: trailing_sales_snapshot {
   derived_table: {
-    persist_for: "24 hours"
-#     indexes: ["product_id"]
-#     distribution: "product_id"
+    datagroup_trigger: ecommerce_etl
     sql: with calendar as
-      (select distinct date(created_at) as snapshot_date
-      from inventory_items
-      -- where dateadd('day',90,created_at)>=current_date
-      )
+    (select distinct created_at as snapshot_date
+    from looker-private-demo.ecomm.inventory_items
+    -- where dateadd('day',90,created_at)>=current_date
+    )
 
-      select
-
-
-      inventory_items.product_id
-      ,date(order_items.created_at) as snapshot_date
-      ,count(*) as trailing_28d_sales
-
-      from looker-private-demo.ecomm.order_items
-      left join looker-private-demo.ecomm.inventory_items on order_items.inventory_item_id = inventory_items.id
-      left join calendar
-      on order_items.created_at <= dateadd('day',28,calendar.snapshot_date)
-      and order_items.created_at >= calendar.snapshot_date
-      -- where dateadd('day',90,calendar.snapshot_date)>=current_date
-      group by 1,2
-
- ;;
+    select
+    inventory_items.product_id
+    ,date(order_items.created_at) as snapshot_date
+    ,count(*) as trailing_28d_sales
+    from looker-private-demo.ecomm.order_items
+    join looker-private-demo.ecomm.inventory_items
+    on order_items.inventory_item_id = inventory_items.id
+    join calendar
+    on date(order_items.created_at) <= date_add(calendar.snapshot_date, interval 28 day)
+    and date(order_items.created_at) >= calendar.snapshot_date
+    -- where dateadd('day',90,calendar.snapshot_date)>=current_date
+    group by 1,2
+    ;;
   }
 
 #   measure: count {
@@ -41,7 +36,7 @@ view: trailing_sales_snapshot {
   dimension: snapshot_date {
     label: "スナップショット"
     type: date
-    sql: ${TABLE}.snapshot_date ;;
+    sql: cast(${TABLE}.snapshot_date as timestamp) ;;
   }
 
   dimension: trailing_28d_sales {
