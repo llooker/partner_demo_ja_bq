@@ -1,28 +1,21 @@
 view: inventory_snapshot {
   derived_table: {
-    persist_for: "24 hours"
-#     indexes: ["snapshot_date"]
-#     distribution: "product_id"
+    datagroup_trigger: ecommerce_etl
     sql: with calendar as
-      (select distinct date(created_at) as snapshot_date
-      from looker-private-demo.ecomm.inventory_items
-      -- where dateadd('day',90,created_at)>=current_date
+      (
+      select distinct created_at as snapshot_date
+        from looker-private-demo.ecomm.inventory_items
       )
 
       select
-
-      inventory_items.product_id
-      ,calendar.snapshot_date
-      ,count(*) as number_in_stock
-
+        inventory_items.product_id
+        ,calendar.snapshot_date
+        ,count(*) as number_in_stock
       from looker-private-demo.ecomm.inventory_items
-      left join calendar
-      on inventory_items.created_at <= calendar.snapshot_date
-      and (inventory_items.sold_at >= calendar.snapshot_date OR inventory_items.sold_at is null)
-      -- where dateadd('day',90,calendar.snapshot_date)>=current_date
-      group by 1,2
-
-       ;;
+         join calendar
+          on inventory_items.created_at <= calendar.snapshot_date
+          and (date(inventory_items.sold_at) >= calendar.snapshot_date OR inventory_items.sold_at is null)
+        group by 1,2;;
   }
 
 
@@ -36,7 +29,7 @@ view: inventory_snapshot {
   dimension: snapshot_date {
     label: "スナップショット"
     type: date
-    sql: ${TABLE}.snapshot_date ;;
+    sql:  cast(${TABLE}.snapshot_date as timestamp) ;;
   }
 
   dimension: number_in_stock {
@@ -55,7 +48,7 @@ view: inventory_snapshot {
   measure: stock_coverage_ratio {
     label: "在庫カバレッジレシオ"
     type: number
-    sql: 1.0 * ${total_in_stock} / nullif(${trailing_sales_snapshot.sum_trailing_28d_sales},0) ;;
+    sql: 1.0 * ${total_in_stock} / (11.0*nullif(${trailing_sales_snapshot.sum_trailing_28d_sales},0)) ;;
     value_format_name: decimal_2
   }
 
@@ -86,7 +79,7 @@ view: inventory_snapshot {
     label: "在庫カバレッジレシオ（Yeasterday）"
     type: number
     view_label: "在庫レシオ比"
-    sql: 1.0 * ${sum_stock_yesterday} / nullif(${trailing_sales_snapshot.sum_trailing_28d_sales_yesterday},0) ;;
+    sql: 1.0 * ${sum_stock_yesterday} / (11*nullif(${trailing_sales_snapshot.sum_trailing_28d_sales_yesterday},0)) ;;
     value_format_name: decimal_2
   }
 

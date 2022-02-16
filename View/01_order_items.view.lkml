@@ -120,14 +120,14 @@ view: order_items {
     label: "出荷"
     type: time
     timeframes: [date, week, month, raw]
-    sql: ${TABLE}.shipped_at ;;
+    sql: CAST(${TABLE}.shipped_at AS TIMESTAMP) ;;
   }
 
   dimension_group: delivered {
     label: "到着"
     type: time
     timeframes: [date, week, month, raw]
-    sql: ${TABLE}.delivered_at ;;
+    sql: CAST(${TABLE}.delivered_at AS TIMESTAMP) ;;
   }
 
   dimension_group: created {
@@ -384,7 +384,7 @@ view: order_items {
     label: "30日内リピートユーザー率"
     type: number
     value_format_name: percent_1
-    sql: 1.0 * ${count_with_repeat_purchase_within_30d} / NULLIF(${count},0) ;;
+    sql: 1.0 * ${count_with_repeat_purchase_within_30d} / (CASE WHEN ${count} = 0 THEN NULL ELSE ${count} END) ;;
     drill_fields: [products.brand, order_count, count_with_repeat_purchase_within_30d]
   }
 
