@@ -1,9 +1,9 @@
 view: sessions {
   derived_table: {
-    datagroup_trigger: ecommerce_etl
+    # datagroup_trigger: ecommerce_etl
 #     indexes: ["session_id"]
 #     distribution: "session_id"
-#     persist_for: "24 hours"
+    # persist_for: "24 hours"
     sql: SELECT
         session_id
         , CAST(MIN(created_at) AS TIMESTAMP) AS session_start
