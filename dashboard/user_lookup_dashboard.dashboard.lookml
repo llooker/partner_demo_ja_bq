@@ -272,7 +272,7 @@
   - name: Email
     title: Email
     type: field_filter
-    default_value: jgraham@gmail.com
+    default_value: garymoles@gmail.com
     allow_multiple_values: true
     required: false
     model: thelook_japanese_bq
